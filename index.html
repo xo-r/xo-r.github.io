@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xo</title>
+</head>
+<body>
+    Friendly
+    <input id="gameCode" placeholder="Enter game code..." type="text" minlength="6" maxlength="6">
+    <input id="joinGameFriendly" value="Join game" type="button">
+    <input id="createGame" value="Create game" type="button">
+    <span id="gameCodeError"></span>
+    <br>
+
+    Ranked
+    <input id="joinGameRanked" value="Play ranked" type="button">
+    <span id="elo"></span>
+    <br>
+
+    Random
+    <input id="joinGameRandom" value="Play random" type="button">
+    <br>
+
+    <a href="/login">login</a>
+    <a href="/register">register</a>
+    <a href="/profile">profile</a>
+
+    <script src="./js/util.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/hash.js"></script>
+</body>
+</html>

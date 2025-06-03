@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xo</title>
+</head>
+<body style="visibility: hidden">
+    <form action="http://localhost:3000/auth/" method="post" id="loginForm">
+        email: <input name="email" type="email" placeholder="a@b.com..."><br>
+        password: <input name="password" type="password"><br>
+        <input type="submit" value="Login">
+    </form>
+
+    dont have an account? <a href="/register">register</a><br>
+    <a href="/">home</a><br>
+
+    <span id="loginError"></span>
+
+    <script src="../js/util.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html>

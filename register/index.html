@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xo</title>
+</head>
+<body style="visibility: hidden">
+    <form action="http://localhost:3000/auth/register" method="post" id="registerForm">
+        username: <input name="username" type="text" placeholder="Player123..."><br>
+        email: <input name="email" type="email" placeholder="a@b.com..."><br>
+        password: <input name="password" type="password"><br>
+        <input type="submit" value="Register">
+    </form>
+
+    <a href="/">home</a><br>
+
+    <span id="registerError"></span>
+
+    <script src="../js/util.js"></script>
+    <script src="../js/register.js"></script>
+</body>
+</html>
