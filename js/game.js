@@ -4,7 +4,7 @@ const socket = io(API_URL, {
 
 const canvas = $("canvas")
 const resultSpan = $("result")
-// const sideSpan = $("side")
+const errorSpan = $("error")
 const turnSpan = $("turn")
 
 const ctx = canvas.getContext("2d")
@@ -16,6 +16,11 @@ const W = canvas.width
 const H = canvas.height
 const CELL_S = 50
 
+const MIN_SCALE = 0.2
+const MAX_SCALE = 4
+
+var gameState = null
+
 var gameCode = ""
 
 var playerNumber = -1
@@ -23,10 +28,77 @@ var playerNumber = -1
 var username = ""
 var opponentUsername = ""
 
-canvas.addEventListener("click",  e => handleClick(e.x - canvas.getBoundingClientRect().left, e.y - canvas.getBoundingClientRect().top))
+var offsetX = 0
+var offsetY = 0
+var scale = 1
 
-socket.on("gameState", gameState => {
-    draw(JSON.parse(gameState))
+var isDragging = false
+var wasDragging = false
+var dragStart = { x: 0, y: 0 }
+
+// canvas.addEventListener("click",  e => handleClick(e.x - canvas.getBoundingClientRect().left, e.y - canvas.getBoundingClientRect().top))
+
+canvas.addEventListener("mousedown", e => {
+    isDragging = true
+    wasDragging = false
+    dragStart.x = e.x - canvas.getBoundingClientRect().left
+    dragStart.y = e.y - canvas.getBoundingClientRect().top
+})
+canvas.addEventListener("mousemove", e => {
+    if (isDragging) {
+        wasDragging = true
+
+        const x = e.x - canvas.getBoundingClientRect().left
+        const y = e.y - canvas.getBoundingClientRect().top
+
+        offsetX += x - dragStart.x
+        offsetY += y - dragStart.y
+
+        dragStart = { x, y }
+
+        draw()
+    }
+})
+canvas.addEventListener("mouseup", e => {
+    if (!wasDragging) {
+        const x = e.x - canvas.getBoundingClientRect().left
+        const y = e.y - canvas.getBoundingClientRect().top
+        handleClick(x, y)
+    }
+    isDragging = false
+    wasDragging = false
+})
+canvas.addEventListener("mouseleave", () => {
+    isDragging = false
+})
+
+canvas.addEventListener("wheel", e => {
+    e.preventDefault()
+    
+    const zoomIntensity = 0.1
+    const zoom = 1 - Math.sign(e.deltaY) * zoomIntensity
+
+    const newScale = scale * zoom
+
+    if (newScale < MIN_SCALE || newScale > MAX_SCALE) return
+
+    const rect = canvas.getBoundingClientRect()
+    const mouseX = (e.clientX - rect.left - offsetX) / scale
+    const mouseY = (e.clientY - rect.top - offsetY) / scale
+
+    offsetX -= mouseX * (zoom - 1) * scale
+    offsetY -= mouseY * (zoom - 1) * scale
+
+    scale = newScale
+
+    draw()
+})
+
+canvas.addEventListener("contextmenu", e => e.preventDefault())
+
+socket.on("gameState", newGameState => {
+    gameState = JSON.parse(newGameState)
+    draw()
 })
 socket.on("preInit", code => {
     gameCode = code
@@ -34,7 +106,7 @@ socket.on("preInit", code => {
     draw()
 })
 socket.on("init", data => {
-    const gameState = JSON.parse(data)
+    gameState = JSON.parse(data)
 
     // sessionStorage.setItem("type", "rejoin")
 
@@ -45,9 +117,10 @@ socket.on("init", data => {
 
     ([username, opponentUsername] = (playerNumber == 0 ? [u0, u1] : [u1, u0]))
 
-    draw(gameState)
+    draw()
 })
-socket.on("joinGameError", msg => document.write(msg))
+socket.on("joinGameError", msg => errorSpan.textContent = `Join error: ${msg}`)
+socket.on("invalidMove", msg => errorSpan.textContent = `Invalid move: ${msg}`)
 
 if (sessionStorage.getItem("type") == "create") {
     socket.emit("createGame")
@@ -61,25 +134,32 @@ if (sessionStorage.getItem("type") == "create") {
 }
 
 function drawGrid() {
-    ctx.lineWidth = 1
-    ctx.strokeStyle = "BLACK"
+    ctx.lineWidth = 1 / scale
+    ctx.strokeStyle = "black"
     ctx.beginPath()
-    ctx.translate(0.5, 0.5)
 
-    for (var i = 1; i < W / CELL_S; i++) {
-        ctx.moveTo(i * CELL_S, 0)
-        ctx.lineTo(i * CELL_S, H)
+    const startX = Math.floor(-offsetX / scale / CELL_S) - 1
+    const endX = Math.ceil((W - offsetX) / scale / CELL_S) + 1
+    const startY = Math.floor(-offsetY / scale / CELL_S) - 1
+    const endY = Math.ceil((H - offsetY) / scale / CELL_S) + 1
+
+    for (let i = startX; i <= endX; i++) {
+        const x = Math.round(i * CELL_S) + 0.5 / scale
+        ctx.moveTo(x, startY * CELL_S)
+        ctx.lineTo(x, endY * CELL_S)
     }
-    for (var j = 1; j < H / CELL_S; j++) {
-        ctx.moveTo(0, j * CELL_S)
-        ctx.lineTo(W, j * CELL_S)
+
+    for (let j = startY; j <= endY; j++) {
+        const y = Math.round(j * CELL_S) + 0.5 / scale
+        ctx.moveTo(startX * CELL_S, y)
+        ctx.lineTo(endX * CELL_S, y)
     }
 
     ctx.stroke()
-    ctx.translate(-0.5, -0.5)
 }
 
-function drawGame(gameState) {
+
+function drawGame() {
     if (gameState.last.exists) {
         ctx.fillStyle = LAST_COLOR
         ctx.fillRect(gameState.last.x * CELL_S + 1, gameState.last.y * CELL_S + 1, CELL_S - 1, CELL_S - 1)
@@ -96,9 +176,22 @@ function drawGame(gameState) {
     }
 }
 
-function draw(gameState = null) {
+function draw() {
+    ctx.save()
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.clearRect(0, 0, W, H)
+
+    ctx.translate(offsetX, offsetY)
+    ctx.scale(scale, scale)
+
     ctx.fillStyle = BG_COLOR
-    ctx.fillRect(0, 0, W, H)
+    ctx.fillRect(
+        (Math.floor(-offsetX / scale / CELL_S) - 2) * CELL_S,
+        (Math.floor(-offsetY / scale / CELL_S) - 2) * CELL_S,
+        (Math.ceil(W / scale / CELL_S) + 4) * CELL_S,
+        (Math.ceil(H / scale / CELL_S) + 4) * CELL_S
+    )
 
     drawGrid()
 
@@ -124,7 +217,7 @@ function draw(gameState = null) {
                 resultSpan.textContent = `${myChar}: ${username} vs ${opponentChar}: ${opponentUsername}`
                 break
             default:
-                gameOver(gameState)
+                gameOver()
                 break
         }
 
@@ -133,7 +226,7 @@ function draw(gameState = null) {
 
         turnSpan.textContent = (gameState.xTurn == isSideX) ? "YOUR TURN" : "OPPONENTS TURN"
 
-        drawGame(gameState)
+        drawGame()
     } else {
         switch (sessionStorage.getItem("type")) {
             case "create":
@@ -147,17 +240,19 @@ function draw(gameState = null) {
                 break
         }
     }
+
+    ctx.restore()
 }
 function handleClick(x, y) {
     if (x < 0 || y < 0 || x > W || y > H) return
 
-    var xx = Math.floor(x / CELL_S)
-    var yy = Math.floor(y / CELL_S)
+    const gameX = Math.floor((x - offsetX) / scale / CELL_S)
+    const gameY = Math.floor((y - offsetY) / scale / CELL_S)
 
-    socket.emit("click", JSON.stringify({ x: xx, y: yy }))
+    socket.emit("click", JSON.stringify({ x: gameX, y: gameY }))
 }
 
-function gameOver(gameState) {
+function gameOver() {
     const win = (playerNumber == gameState.xNumber ? 0 : 1) == gameState.status
     
     if (gameState.status == 2) {
