@@ -23,7 +23,7 @@ var playerNumber = -1
 var username = ""
 var opponentUsername = ""
 
-document.onclick = e => handleClick(e.x - canvas.getBoundingClientRect().left, e.y - canvas.getBoundingClientRect().top)
+canvas.addEventListener("click",  e => handleClick(e.x - canvas.getBoundingClientRect().left, e.y - canvas.getBoundingClientRect().top))
 
 socket.on("gameState", gameState => {
     draw(JSON.parse(gameState))
@@ -85,12 +85,12 @@ function drawGame(gameState) {
         ctx.fillRect(gameState.last.x * CELL_S + 1, gameState.last.y * CELL_S + 1, CELL_S - 1, CELL_S - 1)
     }
 
-    for (xx of gameState.xes) { 
+    for (const xx of gameState.xes) { 
         ctx.fillStyle = "red"
         ctx.fillRect(xx.x * CELL_S + 1, xx.y * CELL_S + 1, CELL_S/2 - 1, CELL_S/2 - 1)
     }
 
-    for (o of gameState.os) { 
+    for (const o of gameState.os) { 
         ctx.fillStyle = "blue"
         ctx.fillRect(o.x * CELL_S + 1, o.y * CELL_S + 1, CELL_S/2 - 1, CELL_S/2 - 1)
     }
@@ -116,6 +116,7 @@ function draw(gameState = null) {
                         resultSpan.textContent = "WAITING IN RANDOM QUEUE..."
                         break
                 }
+                break
             case -1:
                 const myChar = playerNumber == gameState.xNumber ? 'X' : 'O';
                 const opponentChar = playerNumber == gameState.xNumber ? 'O' : 'X';
@@ -159,7 +160,7 @@ function handleClick(x, y) {
 function gameOver(gameState) {
     const win = (playerNumber == gameState.xNumber ? 0 : 1) == gameState.status
     
-    if (gameState.status == -2) {
+    if (gameState.status == 2) {
         resultSpan.textContent = "DRAW"
     } else {
         resultSpan.textContent = win ? "YOU WIN" : "YOU LOSE"
