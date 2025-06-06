@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000"
+const API_URL = "http://xo-r.duckdns.org:9201"
 
 const $ = id => document.getElementById(id)
 
