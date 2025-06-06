@@ -12,6 +12,10 @@ const ctx = canvas.getContext("2d")
 const BG_COLOR = "#BEBAB6"
 const LAST_COLOR = "#6C6660"
 
+const X_IMG = new Image()
+const O_IMG = new Image()
+const STONE_SCALE = 0.8
+
 const W = canvas.width
 const H = canvas.height
 const CELL_S = 50
@@ -36,7 +40,8 @@ var isDragging = false
 var wasDragging = false
 var dragStart = { x: 0, y: 0 }
 
-// canvas.addEventListener("click",  e => handleClick(e.x - canvas.getBoundingClientRect().left, e.y - canvas.getBoundingClientRect().top))
+X_IMG.src = "../assets/x.svg"
+O_IMG.src = "../assets/o.svg"
 
 canvas.addEventListener("mousedown", e => {
     isDragging = true
@@ -166,13 +171,17 @@ function drawGame() {
     }
 
     for (const xx of gameState.xes) { 
-        ctx.fillStyle = "red"
-        ctx.fillRect((xx.x + 0.25) * CELL_S, (xx.y + 0.25) * CELL_S, CELL_S / 2, CELL_S / 2)
+        // ctx.fillStyle = "blue"
+        // ctx.fillRect((xx.x + 0.25) * CELL_S, (xx.y + 0.25) * CELL_S, CELL_S / 2, CELL_S / 2)
+
+        ctx.drawImage(X_IMG, (xx.x + (1 - STONE_SCALE) / 2) * CELL_S, (xx.y + (1 - STONE_SCALE) / 2) * CELL_S, CELL_S * STONE_SCALE, CELL_S * STONE_SCALE)
     }
 
     for (const o of gameState.os) { 
-        ctx.fillStyle = "blue"
-        ctx.fillRect((o.x + 0.25) * CELL_S, (o.y + 0.25) * CELL_S, CELL_S / 2, CELL_S / 2)
+        // ctx.fillStyle = "red"
+        // ctx.fillRect((o.x + 0.25) * CELL_S, (o.y + 0.25) * CELL_S, CELL_S / 2, CELL_S / 2)
+
+        ctx.drawImage(O_IMG, (o.x + (1 - STONE_SCALE) / 2) * CELL_S, (o.y + (1 - STONE_SCALE) / 2) * CELL_S, CELL_S * STONE_SCALE, CELL_S * STONE_SCALE)
     }
 }
 
@@ -195,7 +204,7 @@ function draw() {
 
     if (gameState) {
         drawGame()
-        
+
         switch (gameState.status) {
             case -2:
                 switch (sessionStorage.getItem("type")) {
