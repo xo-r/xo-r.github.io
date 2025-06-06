@@ -162,17 +162,17 @@ function drawGrid() {
 function drawGame() {
     if (gameState.last.exists) {
         ctx.fillStyle = LAST_COLOR
-        ctx.fillRect(gameState.last.x * CELL_S + 1, gameState.last.y * CELL_S + 1, CELL_S - 1, CELL_S - 1)
+        ctx.fillRect(gameState.last.x * CELL_S, gameState.last.y * CELL_S, CELL_S, CELL_S)
     }
 
     for (const xx of gameState.xes) { 
         ctx.fillStyle = "red"
-        ctx.fillRect(xx.x * CELL_S + 1, xx.y * CELL_S + 1, CELL_S/2 - 1, CELL_S/2 - 1)
+        ctx.fillRect((xx.x + 0.25) * CELL_S, (xx.y + 0.25) * CELL_S, CELL_S / 2, CELL_S / 2)
     }
 
     for (const o of gameState.os) { 
         ctx.fillStyle = "blue"
-        ctx.fillRect(o.x * CELL_S + 1, o.y * CELL_S + 1, CELL_S/2 - 1, CELL_S/2 - 1)
+        ctx.fillRect((o.x + 0.25) * CELL_S, (o.y + 0.25) * CELL_S, CELL_S / 2, CELL_S / 2)
     }
 }
 
@@ -193,9 +193,9 @@ function draw() {
         (Math.ceil(H / scale / CELL_S) + 4) * CELL_S
     )
 
-    drawGrid()
-
     if (gameState) {
+        drawGame()
+        
         switch (gameState.status) {
             case -2:
                 switch (sessionStorage.getItem("type")) {
@@ -225,8 +225,6 @@ function draw() {
         // sideSpan.textContent = isSideX ? "X" : "O"
 
         turnSpan.textContent = (gameState.xTurn == isSideX) ? "YOUR TURN" : "OPPONENTS TURN"
-
-        drawGame()
     } else {
         switch (sessionStorage.getItem("type")) {
             case "create":
@@ -240,6 +238,8 @@ function draw() {
                 break
         }
     }
+
+    drawGrid()
 
     ctx.restore()
 }
