@@ -1,30 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>xo</title>
+
+    <link rel="stylesheet" href="./css/index.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.43/theme/synthwave.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> -->
+
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
 </head>
 <body>
-    Friendly
-    <input id="gameCode" placeholder="Enter game code..." type="text" minlength="6" maxlength="6">
-    <input id="joinGameFriendly" value="Join game" type="button">
-    <input id="createGame" value="Create game" type="button">
-    <span id="gameCodeError"></span>
-    <br>
+    <nav class="container-fluid">
+            <ul>
+                <li><strong>xo</strong></li>
+            </ul>
+            <ul>
+                <li><a role="button" class="contrast" href="/login">login</a></li>
+                <li><a role="button" class="contrast" href="/register">register</a></li>
+                <li><a role="button" class="contrast" href="/profile">profile</a></li>
+            </ul>
+    </nav>
+    <hr class="margin-0">
+    <main class="container">
+        <section>
+            <h2>Friendly</h2>
+            <div class="grid">
+                <input id="gameCode" placeholder="Enter game code..." type="text" minlength="6" maxlength="6">
+                <input id="joinGameFriendly" value="Join game" type="button">
+            </div>
 
-    Ranked
-    <input id="joinGameRanked" value="Play ranked" type="button">
-    <span id="elo"></span>
-    <br>
+            <input id="createGame" value="Create game" type="button">
+            <span id="gameCodeError"></span>
+        </section>
 
-    Random
-    <input id="joinGameRandom" value="Play random" type="button">
-    <br>
+        <section>
+            <h2>Ranked</h2>
+            <input id="joinGameRanked" value="Play ranked" type="button">
+            <span id="elo"></span>
+        </section>
 
-    <a href="/login">login</a>
-    <a href="/register">register</a>
-    <a href="/profile">profile</a>
+        <section>
+            <h2>Random</h2>
+            <input id="joinGameRandom" value="Play random" type="button">
+        </section>
+    </main>
 
     <script src="./js/util.js"></script>
     <script src="./js/index.js"></script>
