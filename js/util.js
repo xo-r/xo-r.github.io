@@ -1,5 +1,5 @@
-// const API_URL = "https://xo-r.duckdns.org:9201"
-const API_URL = "http://localhost:9201"
+const API_URL = "https://xo-r.duckdns.org:9201"
+// const API_URL = "http://localhost:9201"
 
 const $ = id => document.getElementById(id)
 
