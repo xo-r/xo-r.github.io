@@ -13,39 +13,52 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.43/theme/synthwave.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="font-['Varela_Round'] min-h-screen flex items-center justify-center bg-base-100">
+<body class="font-[Varela_Round] h-screen overflow-hidden bg-base-100">
 
-  <div class="w-full max-w-md p-8 rounded-lg shadow-lg bg-base-200">
-    <h1 class="text-3xl font-bold text-center mb-8">Register</h1>
+    <div class="navbar bg-base-200 shadow-lg px-4">
+        <div class="navbar-start">
+            <a class="btn btn-ghost text-xl" href="/">xo</a>
+        </div>
+        <div class="navbar-end space-x-2">
+            <a class="btn btn-outline" href="/login">Login</a>
+            <a class="btn btn-outline" href="/register">Register</a>
+            <a class="btn btn-outline" href="/profile">Profile</a>
+        </div>
+    </div>
 
-    <form action="http://localhost:3000/auth/register" method="post" id="registerForm" class="space-y-5">
-      <label class="form-control w-full">
-        <span class="label-text">Username</span>
-        <input name="username" type="text" placeholder="Player123..." class="input input-bordered w-full" required />
-      </label>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div class="card shadow-lg bg-base-200 p-8 w-full max-w-md">
+            <h1 class="text-3xl font-bold text-center mb-8">Register</h1>
 
-      <label class="form-control w-full">
-        <span class="label-text">Email</span>
-        <input name="email" type="email" placeholder="a@b.com" class="input input-bordered w-full" required />
-      </label>
+            <form action="http://localhost:3000/auth/register" method="post" id="registerForm" class="space-y-5">
+                <label class="form-control w-full">
+                    <span class="label-text">Username</span>
+                    <input name="username" type="text" placeholder="Player123..." class="input input-bordered w-full mb-3" required />
+                </label>
 
-      <label class="form-control w-full">
-        <span class="label-text">Password</span>
-        <input name="password" type="password" class="input input-bordered w-full" required />
-      </label>
+                <label class="form-control w-full">
+                    <span class="label-text">Email</span>
+                    <input name="email" type="email" placeholder="a@b.com" class="input input-bordered w-full mb-3" required />
+                </label>
 
-      <input type="submit" value="Register" class="btn btn-primary w-full" />
-    </form>
+                <label class="form-control w-full">
+                    <span class="label-text">Password</span>
+                    <input name="password" type="password" class="input input-bordered w-full mb-4" required />
+                </label>
 
-    <p class="text-sm text-center mt-6">
-      Already have an account?
-      <a href="/login" class="link link-hover text-accent">Login</a>
-    </p>
+                <input type="submit" value="Register" class="btn btn-primary w-full" />
+            </form>
 
-    <span id="registerError" class="text-error text-sm block text-center mt-4"></span>
-  </div>
+            <p class="text-sm text-center mt-6">
+                Already have an account?
+                <a href="/login" class="link link-hover text-accent">Login</a>
+            </p>
 
-  <script src="../js/util.js"></script>
-  <script src="../js/register.js"></script>
+            <span id="registerError" class="text-error text-sm block text-center mt-4"></span>
+        </div>
+    </div>
+
+    <script src="../js/util.js"></script>
+    <script src="../js/register.js"></script>
 </body>
 </html>

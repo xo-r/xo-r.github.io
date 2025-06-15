@@ -13,32 +13,47 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.43/theme/synthwave.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-base-200 font-sans" style="visibility: hidden">
-  <div class="card shadow-lg bg-base-100 p-8 w-full max-w-md">
-    <h1 class="text-3xl font-bold text-center mb-6">Log in</h1>
-    <form action="http://localhost:3000/auth/" method="post" id="loginForm" class="space-y-4">
-      <label class="form-control w-full">
-        <span class="label-text">Email</span>
-        <input name="email" type="email" placeholder="a@b.com" class="input input-bordered w-full mb-3" required />
-      </label> 
+<body class="font-[Varela_Round] h-screen overflow-hidden bg-base-100">
 
-      <label class="form-control w-full">
-        <span class="label-text">Password</span>
-        <input name="password" type="password" class="input input-bordered w-full mb-4" required />
-      </label>
+    <div class="navbar bg-base-200 shadow-lg px-4">
+        <div class="navbar-start">
+            <a class="btn btn-ghost text-xl" href="/">xo</a>
+        </div>
+        <div class="navbar-end space-x-2">
+            <a class="btn btn-outline" href="/login">Login</a>
+            <a class="btn btn-outline" href="/register">Register</a>
+            <a class="btn btn-outline" href="/profile">Profile</a>
+        </div>
+    </div>
 
-      <input type="submit" value="Login" class="btn btn-primary w-full" />
-    </form>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div class="card shadow-lg bg-base-200 p-8 w-full max-w-md">
+            <h1 class="text-3xl font-bold text-center mb-6">Log in</h1>
 
-    <p class="text-sm text-center mt-4">
-      Don't have an account?
-      <a href="/register" class="link link-hover text-accent">Register</a>
-    </p>
+            <form action="http://localhost:3000/auth/" method="post" id="loginForm" class="space-y-4">
+                <label class="form-control w-full">
+                    <span class="label-text">Email</span>
+                    <input name="email" type="email" placeholder="a@b.com" class="input input-bordered w-full mb-3" required />
+                </label>
 
-    <span id="loginError" class="text-error text-sm block text-center mt-2"></span>
-  </div>
+                <label class="form-control w-full">
+                    <span class="label-text">Password</span>
+                    <input name="password" type="password" class="input input-bordered w-full mb-4" required />
+                </label>
 
-  <script src="../js/util.js"></script>
-  <script src="../js/login.js"></script>
+                <input type="submit" value="Login" class="btn btn-primary w-full" />
+            </form>
+
+            <p class="text-sm text-center mt-4">
+                Don't have an account?
+                <a href="/register" class="link link-hover text-accent">Register</a>
+            </p>
+
+            <span id="loginError" class="text-error text-sm block text-center mt-2"></span>
+        </div>
+    </div>
+
+    <script src="../js/util.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 </html>

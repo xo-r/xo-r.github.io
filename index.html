@@ -15,64 +15,64 @@
 </head>
 <body class="font-[Varela_Round] h-screen overflow-hidden bg-base-100">
 
-  <div class="navbar bg-base-200 shadow-lg px-4">
-    <div class="navbar-start">
-      <a class="btn btn-ghost text-xl" href="/">xo</a>
-    </div>
-    <div class="navbar-end space-x-2">
-      <a class="btn btn-outline" href="/login">Login</a>
-      <a class="btn btn-outline" href="/register">Register</a>
-      <a class="btn btn-outline" href="/profile">Profile</a>
-    </div>
-  </div>
-
-  <main class="flex h-full">
-    <!-- Left: Play section -->
-    <section class="flex-1 p-6 overflow-y-auto space-y-6">
-        <h1 class="text-5xl font-bold text-center mb-6">Play <span class="text-6xl">xo</span></h1>
-
-        <div class="card bg-base-200 p-6 shadow-md">
-            <h2 class="text-2xl font-semibold mb-4">🎮 Friendly Match</h2>
-            <div class="flex flex-wrap gap-2 items-center mb-3">
-                <input class="input input-bordered flex-1" id="gameCode" type="text" placeholder="Enter game code..." />
-                <button class="btn btn-primary flex-1" id="joinGameFriendly">Join</button>
-            </div>
-            <button class="btn btn-secondary w-full" id="createGame">Create New Game</button>
-            <p class="text-error text-sm mt-2" id="gameCodeError"></p>
+    <div class="navbar bg-base-200 shadow-lg px-4">
+        <div class="navbar-start">
+            <a class="btn btn-ghost text-xl" href="/">xo</a>
         </div>
+        <div class="navbar-end space-x-2">
+            <a class="btn btn-outline" href="/login">Login</a>
+            <a class="btn btn-outline" href="/register">Register</a>
+            <a class="btn btn-outline" href="/profile">Profile</a>
+        </div>
+    </div>
 
-        <div class="card bg-base-200 p-6 shadow-md">
-            <h2 class="text-2xl font-semibold mb-4">🏆 Ranked</h2>
-            <div class="flex flex-wrap gap-2 items-center mb-3">
-                <div class="flex-1">
-                    <button class="btn btn-accent w-full mb-3" id="joinGameClassic">⏱️ Play Classic</button>
-                    <div class="flex justify-center">
-                        <span class="badge badge-outline" id="eloClassic">ELO: 2000</span>
+    <main class="flex h-full">
+        <!-- Left: Play section -->
+        <section class="flex-1 p-6 overflow-y-auto space-y-6">
+            <h1 class="text-5xl font-bold text-center mb-6">Play <span class="text-6xl">xo</span></h1>
+
+            <div class="card bg-base-200 p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">🎮 Friendly Match</h2>
+                <div class="flex flex-wrap gap-2 items-center mb-3">
+                    <input class="input input-bordered flex-1" id="gameCode" type="text" placeholder="Enter game code..." />
+                    <button class="btn btn-primary flex-1" id="joinGameFriendly">Join</button>
+                </div>
+                <button class="btn btn-secondary w-full" id="createGame">Create New Game</button>
+                <p class="text-error text-sm mt-2" id="gameCodeError"></p>
+            </div>
+
+            <div class="card bg-base-200 p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">🏆 Ranked</h2>
+                <div class="flex flex-wrap gap-2 items-center mb-3">
+                    <div class="flex-1">
+                        <button class="btn btn-accent w-full mb-3" id="joinGameClassic">⏱️ Play Classic</button>
+                        <div class="flex justify-center">
+                            <span class="badge badge-outline" id="eloClassic">ELO: 2000</span>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <button class="btn btn-accent w-full mb-3" id="joinGameBlitz">⚡ Play Blitz</button>
+                        <div class="flex justify-center">
+                            <span class="badge badge-outline content-center" id="eloBlitz">ELO: 1000</span>
+                        </div>
                     </div>
                 </div>
-                <div class="flex-1">
-                    <button class="btn btn-accent w-full mb-3" id="joinGameBlitz">⚡ Play Blitz</button>
-                    <div class="flex justify-center">
-                        <span class="badge badge-outline content-center" id="eloBlitz">ELO: 1000</span>
-                    </div>
-                </div>
             </div>
-        </div>
 
-        <div class="card bg-base-200 p-6 shadow-md">
-            <h2 class="text-2xl font-semibold mb-4">🎲 Random Match</h2>
-            <button class="btn btn-info w-full" id="joinGameRandom">Play Random</button>
-        </div>
-    </section>
+            <div class="card bg-base-200 p-6 shadow-md">
+                <h2 class="text-2xl font-semibold mb-4">🎲 Random Match</h2>
+                <button class="btn btn-info w-full" id="joinGameRandom">Play Random</button>
+            </div>
+        </section>
 
-    <!-- Right: login or recent games -->
-    <section id="rightPane" class="hidden md:block w-1/2 border-l border-base-300 p-6 overflow-y-auto">
-      <!-- Content loaded dynamically -->
-    </section>
-  </main>
+        <!-- Right: login or recent games -->
+        <section id="rightPane" class="hidden md:block w-1/2 border-l border-base-300 p-6 overflow-y-auto">
+            <!-- Content loaded dynamically -->
+        </section>
+    </main>
 
-  <script src="./js/util.js"></script>
-  <script src="./js/index.js"></script>
-  <script src="./js/hash.js"></script>
+    <script src="./js/util.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/hash.js"></script>
 </body>
 </html>
